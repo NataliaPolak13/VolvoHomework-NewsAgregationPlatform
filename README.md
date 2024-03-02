@@ -13,4 +13,7 @@
 ## Categories
 
 - **Culture:** The latest cultural events organized in a chosen city, rated by users on a scale from 1 to 10.
+- **Transportation:** Current information about road disruptions and delays in public transportation, available in the selected location. There will be a filter option to select the appropriate subcategory. Positivity will be assessed based on two criteria: the number of news views and keywords such as accidents or disruptions.
+- **Entertainment:** Places and entertainment events such as pubs, clubs, or parties, rated by the users. There will be a filter option to select the appropriate subcategory. Users will be able to rate the positivity of a place on a scale from 1 to 10.
+- **Gastronomy:** A list of local restaurants with the option for owners to add new eating place with information about current discounts and promotions. Users will be able to rate the positivity of a place on a scale from 1 to 10.
 
