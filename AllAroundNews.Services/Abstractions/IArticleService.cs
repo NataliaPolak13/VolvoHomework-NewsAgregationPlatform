@@ -11,5 +11,6 @@ namespace AllAroundNews.Services.Abstractions
     {
         public Task<Article[]> GetArticlesAsync();
         public Task<Article?> GetArticlesByIdAsync(Guid id);
+        public Task AggregateFromSourceAsync(string rssLink);
     }
 }

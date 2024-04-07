@@ -2,6 +2,8 @@
 using AllAroundNews.Services.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using NetAcademy.UI.Models;
+using System.ServiceModel.Syndication;
+using System.Xml;
 
 namespace AllAroundNews.Controllers
 {
@@ -25,12 +27,24 @@ namespace AllAroundNews.Controllers
                     Title = article.Title,
                     Text = article.Text
                 }).ToArray();
-            var isAdmin = false;//todo check from claims or from DB 
+            var isAdmin = false;
+
+
             return View(new ArticlesIndexViewModel()
             {
                 Articles = articles,
-                IsAdmin = isAdmin
             });
+        }
+        public async Task<IActionResult> AggregateAsync()
+        {
+            var rssLink = @"https://www.wroclaw.pl/komunikacja/rss";
+            await _articleService.AggregateFromSourceAsync(rssLink);
+
+            var reader = XmlReader.Create(rssLink);
+            var feed = SyndicationFeed.Load(reader);
+            var data = feed.Items;
+
+            return RedirectToAction("Index");
         }
     }
 }
