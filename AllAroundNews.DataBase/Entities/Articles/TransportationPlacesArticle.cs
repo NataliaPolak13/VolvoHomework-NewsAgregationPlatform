@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AllAroundNews.DataBase.Entities
+namespace AllAroundNews.DataBase.Entities.Articles
 {
-    public class Transportation
+    public class TransportationPlacesArticle : Article
     {
-        public Guid Id { get; set; }
 
     }
 }

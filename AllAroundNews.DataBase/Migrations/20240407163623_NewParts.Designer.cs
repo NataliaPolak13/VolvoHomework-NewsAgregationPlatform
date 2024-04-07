@@ -4,6 +4,7 @@ using AllAroundNews.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AllAroundNews.DataBase.Migrations
 {
     [DbContext(typeof(NewsAgregationPlatformDbContext))]
-    partial class NewsAgregationPlatformDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240407163623_NewParts")]
+    partial class NewParts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,36 +52,6 @@ namespace AllAroundNews.DataBase.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Articles");
-                });
-
-            modelBuilder.Entity("AllAroundNews.DataBase.Entities.Discount", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DiscountRecipient")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("PlaceId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("ValidationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Value")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PlaceId");
-
-                    b.ToTable("Discount");
                 });
 
             modelBuilder.Entity("AllAroundNews.DataBase.Entities.Event", b =>
@@ -145,18 +118,6 @@ namespace AllAroundNews.DataBase.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Place");
-                });
-
-            modelBuilder.Entity("AllAroundNews.DataBase.Entities.Discount", b =>
-                {
-                    b.HasOne("AllAroundNews.DataBase.Entities.Place", null)
-                        .WithMany("Discounts")
-                        .HasForeignKey("PlaceId");
-                });
-
-            modelBuilder.Entity("AllAroundNews.DataBase.Entities.Place", b =>
-                {
-                    b.Navigation("Discounts");
                 });
 #pragma warning restore 612, 618
         }

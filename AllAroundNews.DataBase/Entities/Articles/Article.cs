@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AllAroundNews.DataBase.Entities
+namespace AllAroundNews.DataBase.Entities.Articles
 {
     public class Article
     {

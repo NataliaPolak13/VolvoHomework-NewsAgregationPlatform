@@ -1,5 +1,5 @@
 ﻿using AllAroundNews.DataBase;
-using AllAroundNews.DataBase.Entities;
+using AllAroundNews.DataBase.Entities.Articles;
 using AllAroundNews.Services.Abstractions;
 using HtmlAgilityPack;
 using Microsoft.EntityFrameworkCore;
