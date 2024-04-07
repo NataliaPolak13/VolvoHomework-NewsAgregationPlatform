@@ -6,9 +6,15 @@ namespace AllAroundNews.DataBase
 {
     public class NewsAgregationPlatformDbContext : DbContext
     {
-        public DbSet<Article> Articles { get; set; }
-        public DbSet<Place> Place { get; set; }
-        public DbSet<Event> Event { get; set; }
+        public DbSet<CulturePlacesArticle> CulturePlacesArticles { get; set; }
+        public DbSet<EntertainmentPlacesArticle> EntertainmentPlacesArticles { get; set; }
+        public DbSet<GastronomyPlacesArticle> GastronomyPlacesArticles { get; set; }
+        public DbSet<TransportationPlacesArticle> TransportationPlacesArticles { get; set; }
+
+
+        public DbSet<Place> Places { get; set; }
+        public DbSet<Event> Events { get; set; }
+        public DbSet<Discount> Discounts { get; set; }
 
 
 

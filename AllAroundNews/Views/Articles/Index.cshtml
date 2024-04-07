@@ -7,6 +7,27 @@
         <a asp-action="Aggregate" asp-controller="Articles" class="col-12 col-lg-4 btn btn-danger">Aggregate</a>
     </div>
 
+@if (Model.TransportationPlacesArticles.Any())
+{
+    foreach (var article in Model.TransportationPlacesArticles)
+    {
+        await Html.RenderPartialAsync("_ArticlePreview", article);
+    }
+}
+@if (Model.GastronomyPlacesArticles.Any())
+{
+    foreach (var article in Model.GastronomyPlacesArticles)
+    {
+        await Html.RenderPartialAsync("_ArticlePreview", article);
+    }
+}
+@if (Model.CulturePlacesArticles.Any())
+{
+    foreach (var article in Model.CulturePlacesArticles)
+    {
+        await Html.RenderPartialAsync("_ArticlePreview", article);
+    }
+}
 @if (Model.Articles.Any())
 {
     foreach (var article in Model.Articles)

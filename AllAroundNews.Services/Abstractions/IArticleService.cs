@@ -1,4 +1,5 @@
-﻿using AllAroundNews.DataBase.Entities.Articles;
+﻿using AllAroundNews.DataBase.Entities.Abstractions;
+using AllAroundNews.DataBase.Entities.Articles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace AllAroundNews.Services.Abstractions
 {
     public interface IArticleService
     {
-        public Task<Article[]> GetArticlesAsync();
-        public Task<Article?> GetArticlesByIdAsync(Guid id);
-        public Task AggregateFromSourceAsync(string rssLink);
+        Task<T[]> GetArticlesAsync<T>() where T : class, IArticle;
+        Task<T> GetArticlesByIdAsync<T>(Guid id) where T : class, IArticle;
+        public Task AggregateFromSourceAsync<T>(string rssLink) where T : class, IArticle, new();
     }
 }

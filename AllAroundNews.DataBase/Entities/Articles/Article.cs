@@ -15,5 +15,6 @@ namespace AllAroundNews.DataBase.Entities.Articles
 
         public DateTime PublicationDate { get; set; }
         public string SourceLink { get; set; }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AllAroundNews.DataBase;
+using AllAroundNews.DataBase.Entities.Abstractions;
 using AllAroundNews.DataBase.Entities.Articles;
 using AllAroundNews.Services.Abstractions;
 using HtmlAgilityPack;
@@ -24,30 +25,29 @@ namespace AllAroundNews.Services.Implementation
             _logger = logger;
         }
 
-        public Task<Article[]> GetArticlesAsync()
+        public Task<T[]> GetArticlesAsync<T>() where T : class, IArticle
         {
-            return _dbContext.Articles.ToArrayAsync();
+            return _dbContext.Set<T>().ToArrayAsync();
         }
 
-        public Task<Article?> GetArticlesByIdAsync(Guid id)
+        public Task<T> GetArticlesByIdAsync<T>(Guid id) where T : class, IArticle
         {
-            return _dbContext.Articles.SingleOrDefaultAsync(article
-                => article.Id.Equals(id));
-
+            return _dbContext.Set<T>().SingleOrDefaultAsync(article => article.Id.Equals(id));
         }
-        public async Task AggregateFromSourceAsync(string rssLink)
+
+        public async Task AggregateFromSourceAsync<T>(string rssLink) where T : class, IArticle, new()
         {
             try
             {
                 var reader = XmlReader.Create(rssLink);
                 var feed = SyndicationFeed.Load(reader);
 
-                var existedArticles = await _dbContext.Articles
+                var existedArticles = await _dbContext.Set<T>()
                     .Select(article => article.SourceLink)
                     .ToArrayAsync();
 
                 var articles = feed.Items.Select(item =>
-                    new Article()
+                    new T()
                     {
                         Id = Guid.NewGuid(),
                         Title = item.Title.Text,
@@ -67,7 +67,7 @@ namespace AllAroundNews.Services.Implementation
                     var text = await GetArticleTextByUrl(article.Key);
                     articles[article.Key].Text = text;
                 }
-                await _dbContext.Articles.AddRangeAsync(articles.Values);
+                await _dbContext.Set<T>().AddRangeAsync(articles.Values);
                 await _dbContext.SaveChangesAsync();
 
                 _logger.LogDebug("Articles was added successfully");
