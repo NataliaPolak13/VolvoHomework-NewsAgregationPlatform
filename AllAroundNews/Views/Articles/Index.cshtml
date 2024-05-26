@@ -1,37 +1,10 @@
-﻿@using NetAcademy.UI.Models
+﻿﻿@using NetAcademy.UI.Models
 @model ArticlesIndexViewModel
+
 
 <h2>Articles</h2>
 
-    <div class="row">
-        <a asp-action="Aggregate" asp-controller="Articles" class="col-12 col-lg-4 btn btn-danger">Aggregate</a>
-    </div>
-
-@if (Model.TransportationPlacesArticles.Any())
+@foreach (var article in Model.Articles)
 {
-    foreach (var article in Model.TransportationPlacesArticles)
-    {
-        await Html.RenderPartialAsync("_ArticlePreview", article);
-    }
-}
-@if (Model.GastronomyPlacesArticles.Any())
-{
-    foreach (var article in Model.GastronomyPlacesArticles)
-    {
-        await Html.RenderPartialAsync("_ArticlePreview", article);
-    }
-}
-@if (Model.CulturePlacesArticles.Any())
-{
-    foreach (var article in Model.CulturePlacesArticles)
-    {
-        await Html.RenderPartialAsync("_ArticlePreview", article);
-    }
-}
-@if (Model.Articles.Any())
-{
-    foreach (var article in Model.Articles)
-    {
-        await Html.RenderPartialAsync("_ArticlePreview", article);
-    }
+    <h3>@article.Title</h3>
 }

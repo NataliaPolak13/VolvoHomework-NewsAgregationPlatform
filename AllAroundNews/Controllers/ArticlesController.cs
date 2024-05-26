@@ -1,15 +1,14 @@
 ﻿using AllAroundNews.DataBase.Entities.Abstractions;
-using AllAroundNews.DataBase.Entities.Articles;
 using AllAroundNews.Models;
 using AllAroundNews.Services.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using NetAcademy.UI.Models;
-using System.ServiceModel.Syndication;
-using System.Xml;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AllAroundNews.Controllers
 {
-    public class ArticlesController<T> : Controller where T : class, IArticle, new()
+    public class ArticlesController : Controller 
     {
         private readonly IArticleService _articleService;
 
@@ -17,10 +16,11 @@ namespace AllAroundNews.Controllers
         {
             _articleService = articleService;
         }
+
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var articles = (await _articleService.GetArticlesAsync<T>())
+            var articles = (await _articleService.GetArticlesAsync())
                 .Select(article => new ArticleModel()
                 {
                     Id = article.Id,
@@ -30,25 +30,22 @@ namespace AllAroundNews.Controllers
                     Title = article.Title,
                     Text = article.Text
                 }).ToArray();
-            var isAdmin = false;
 
+            var isAdmin = false; // Możesz dodać logikę administracyjną jeśli jest wymagana
 
             return View(new ArticlesIndexViewModel()
             {
                 Articles = articles,
             });
         }
-        public async Task<IActionResult> AggregateAsync()
+
+        [HttpGet]
+        public async Task<IActionResult> Aggregate()
         {
             var rssLink = @"https://www.wroclaw.pl/komunikacja/rss";
-            await _articleService.AggregateFromSourceAsync<T>(rssLink);
-
-            var reader = XmlReader.Create(rssLink);
-            var feed = SyndicationFeed.Load(reader);
-            var data = feed.Items;
+            await _articleService.AggregateFromSourceAsync(rssLink);
 
             return RedirectToAction("Index");
         }
-
     }
 }

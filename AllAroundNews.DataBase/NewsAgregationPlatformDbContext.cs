@@ -15,6 +15,7 @@ namespace AllAroundNews.DataBase
         public DbSet<Place> Places { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Discount> Discounts { get; set; }
+        public DbSet<Article> Articles { get; set; }
 
 
 

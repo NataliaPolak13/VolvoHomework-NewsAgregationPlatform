@@ -11,5 +11,6 @@ namespace AllAroundNews.DataBase.Entities.Articles
         public List<Event> Concerts { get; }
         public List<Event> Exhibitions { get; }
 
+
     }
 }

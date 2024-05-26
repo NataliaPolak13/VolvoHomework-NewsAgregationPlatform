@@ -9,45 +9,44 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Syndication;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace AllAroundNews.Services.Implementation
 {
-    public class ArticleService :IArticleService
+    public class ArticleService: IArticleService
     {
         private readonly NewsAgregationPlatformDbContext _dbContext;
         private readonly ILogger<ArticleService> _logger;
+
         public ArticleService(NewsAgregationPlatformDbContext dbContext, ILogger<ArticleService> logger)
         {
             _dbContext = dbContext;
             _logger = logger;
         }
 
-        public Task<T[]> GetArticlesAsync<T>() where T : class, IArticle
+        public async Task<Article[]> GetArticlesAsync()
         {
-            return _dbContext.Set<T>().ToArrayAsync();
+            return await _dbContext.Articles.ToArrayAsync();
         }
 
-        public Task<T> GetArticlesByIdAsync<T>(Guid id) where T : class, IArticle
+        public async Task<Article?> GetArticlesByIdAsync(Guid id)
         {
-            return _dbContext.Set<T>().SingleOrDefaultAsync(article => article.Id.Equals(id));
+            return await _dbContext.Articles.SingleOrDefaultAsync(article => article.Id.Equals(id));
         }
 
-        public async Task AggregateFromSourceAsync<T>(string rssLink) where T : class, IArticle, new()
+        public async Task AggregateFromSourceAsync(string rssLink)
         {
             try
             {
                 var reader = XmlReader.Create(rssLink);
                 var feed = SyndicationFeed.Load(reader);
 
-                var existedArticles = await _dbContext.Set<T>()
+                var existedArticles = await _dbContext.Articles
                     .Select(article => article.SourceLink)
                     .ToArrayAsync();
 
                 var articles = feed.Items.Select(item =>
-                    new T()
+                    new Article()
                     {
                         Id = Guid.NewGuid(),
                         Title = item.Title.Text,
@@ -62,21 +61,23 @@ namespace AllAroundNews.Services.Implementation
                         a => a);
                 _logger.LogDebug("Articles was taken successfully");
 
-                foreach (var article in articles)
+                foreach (var article in articles.Values)
                 {
-                    var text = await GetArticleTextByUrl(article.Key);
-                    articles[article.Key].Text = text;
+                    var text = await GetArticleTextByUrl(article.SourceLink);
+                    article.Text = text;
                 }
-                await _dbContext.Set<T>().AddRangeAsync(articles.Values);
-                await _dbContext.SaveChangesAsync();
 
-                _logger.LogDebug("Articles was added successfully");
+                await _dbContext.AddRangeAsync(articles.Values);
+                await _dbContext.SaveChangesAsync();
+                _logger.LogDebug("Articles were added successfully");
             }
             catch (Exception e)
             {
+                _logger.LogError($"Error occurred: {e.Message}");
                 throw;
             }
         }
+
         private async Task<string> GetArticleTextByUrl(string url)
         {
             var web = new HtmlWeb();

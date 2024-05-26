@@ -1,4 +1,5 @@
 using AllAroundNews.DataBase;
+using AllAroundNews.Mapper;
 using AllAroundNews.Services.Abstractions;
 using AllAroundNews.Services.Implementation;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,7 @@ namespace AllAroundNews
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IArticleService, ArticleService>();
-
+            builder.Services.AddScoped<ArticleMapper>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
