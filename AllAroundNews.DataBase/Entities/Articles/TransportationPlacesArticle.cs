@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AllAroundNews.DataBase.Entities.Articles
 {
-    public class TransportationPlacesArticle : Article
+    public class TransportationPlacesArticle 
     {
 
     }

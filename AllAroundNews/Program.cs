@@ -18,6 +18,7 @@ namespace AllAroundNews
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IArticleService, ArticleService>();
             builder.Services.AddScoped<ArticleMapper>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

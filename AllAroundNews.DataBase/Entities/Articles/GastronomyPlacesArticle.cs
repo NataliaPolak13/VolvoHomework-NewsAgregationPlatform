@@ -8,7 +8,7 @@ namespace AllAroundNews.DataBase.Entities.Articles
 {
     public class GastronomyPlacesArticle
     {
-        public List<Place> Restaurants { get; }
+       // public List<Place> Restaurants { get; }
 
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace AllAroundNews.RouteConstraints
-{
-    public class CategoryConstraint :IRouteConstraint
+﻿//namespace AllAroundNews.RouteConstraints
+//{
+/*    public class CategoryConstraint :IRouteConstraint
     {
         public bool Match(HttpContext? httpContext, IRouter? route, string routeKey, RouteValueDictionary values,
            RouteDirection routeDirection)
@@ -14,4 +14,4 @@
                    (category == "transport" || category == "entertainment" || category == "culture");
         }
     }
-}
+}*/

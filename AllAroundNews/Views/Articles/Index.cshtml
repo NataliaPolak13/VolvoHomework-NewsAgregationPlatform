@@ -1,10 +1,16 @@
-﻿﻿@using NetAcademy.UI.Models
+﻿
 @model ArticlesIndexViewModel
-
 
 <h2>Articles</h2>
 
-@foreach (var article in Model.Articles)
+    <div class="row">
+        <a asp-action="Aggregate" asp-controller="Articles" class="col-12 col-lg-4 btn btn-danger">Aggregate</a>
+    </div>
+
+@if (Model.Articles.Any())
 {
-    <h3>@article.Title</h3>
+    foreach (var article in Model.Articles)
+    {
+        await Html.RenderPartialAsync("_ArticlePreview", article);
+    }
 }

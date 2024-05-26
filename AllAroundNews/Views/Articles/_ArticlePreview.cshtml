@@ -1,5 +1,8 @@
 ﻿@model ArticleModel
 
+@{
+    ViewData["Title"] = "Articles";
+}
 
 <div class="card">
    <div class="card-body">
@@ -7,6 +10,6 @@
         <p class="card-text">
             @Html.Raw(Model.Description)
         </p>
-        <a href="#" class="btn btn-primary">Enter</a>
+        <a href="@Model.SourceLink" class="btn btn-primary">Enter @Model.SourceName</a>
     </div>
 </div>

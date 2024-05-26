@@ -1,8 +1,8 @@
 ﻿using AllAroundNews.DataBase.Entities.Abstractions;
+using AllAroundNews.Mapper;
 using AllAroundNews.Models;
 using AllAroundNews.Services.Abstractions;
 using Microsoft.AspNetCore.Mvc;
-using NetAcademy.UI.Models;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,13 +11,13 @@ namespace AllAroundNews.Controllers
     public class ArticlesController : Controller 
     {
         private readonly IArticleService _articleService;
+        private readonly ArticleMapper _articleMapper;
 
         public ArticlesController(IArticleService articleService)
         {
             _articleService = articleService;
         }
 
-        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var articles = (await _articleService.GetArticlesAsync())
@@ -39,10 +39,9 @@ namespace AllAroundNews.Controllers
             });
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Aggregate()
+        public async Task<IActionResult> AggregateAsync()
         {
-            var rssLink = @"https://www.wroclaw.pl/komunikacja/rss";
+            var rssLink = @"https://www.pcgamesn.com/mainrss.xml";
             await _articleService.AggregateFromSourceAsync(rssLink);
 
             return RedirectToAction("Index");

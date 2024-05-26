@@ -9,9 +9,9 @@ namespace AllAroundNews.DataBase.Entities.Articles
 {
     public class EntertainmentPlacesArticle
     {
-        public List<Place> Pubs { get; }
+/*        public List<Place> Pubs { get; }
         public List<Place> Clubs { get; }
-        public List <Event> Parties { get; }
+        public List <Event> Parties { get; }*/
 
     }
 }

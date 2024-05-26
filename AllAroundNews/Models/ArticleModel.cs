@@ -9,5 +9,7 @@
 
         public DateTime PublicationDate { get; set; }
         public string SourceLink { get; set; }
+        public string SourceName { get; set; }
+
     }
 }

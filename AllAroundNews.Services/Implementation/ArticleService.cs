@@ -83,8 +83,15 @@ namespace AllAroundNews.Services.Implementation
             var web = new HtmlWeb();
             var doc = await web.LoadFromWebAsync(url);
 
-            var articleText = doc.DocumentNode
-                .SelectSingleNode("//div[contains(@class, 'entry-content')]").InnerHtml;
+            var articleNode = doc.DocumentNode.SelectSingleNode("//div[contains(@class, 'entry-content')]");
+
+            if (articleNode == null)
+            {
+
+                throw new Exception($"Article content not found for URL: {url}");
+            }
+
+            var articleText = articleNode.InnerHtml;
 
             return articleText;
         }

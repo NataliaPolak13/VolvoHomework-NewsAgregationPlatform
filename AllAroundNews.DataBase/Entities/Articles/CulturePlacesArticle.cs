@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace AllAroundNews.DataBase.Entities.Articles
 {
-    public class CulturePlacesArticle : Article
+    public class CulturePlacesArticle
     {
-        public List<Event> Concerts { get; }
-        public List<Event> Exhibitions { get; }
+/*        public List<Event> Concerts { get; }
+        public List<Event> Exhibitions { get; }*/
 
 
     }

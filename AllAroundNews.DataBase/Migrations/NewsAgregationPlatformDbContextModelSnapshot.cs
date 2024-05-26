@@ -78,7 +78,7 @@ namespace AllAroundNews.DataBase.Migrations
 
                     b.HasIndex("PlaceId");
 
-                    b.ToTable("Discount");
+                    b.ToTable("Discounts");
                 });
 
             modelBuilder.Entity("AllAroundNews.DataBase.Entities.Event", b =>
@@ -108,7 +108,7 @@ namespace AllAroundNews.DataBase.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Event");
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("AllAroundNews.DataBase.Entities.Place", b =>
@@ -144,7 +144,7 @@ namespace AllAroundNews.DataBase.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Place");
+                    b.ToTable("Places");
                 });
 
             modelBuilder.Entity("AllAroundNews.DataBase.Entities.Discount", b =>
