@@ -13,23 +13,17 @@ namespace AllAroundNews.Controllers
         private readonly IArticleService _articleService;
         private readonly ArticleMapper _articleMapper;
 
-        public ArticlesController(IArticleService articleService)
+        public ArticlesController(IArticleService articleService, ArticleMapper articleMapper)
         {
             _articleService = articleService;
+            _articleMapper = articleMapper;
+
         }
 
         public async Task<IActionResult> Index()
         {
             var articles = (await _articleService.GetArticlesAsync())
-                .Select(article => new ArticleModel()
-                {
-                    Id = article.Id,
-                    Description = article.Description,
-                    PublicationDate = article.PublicationDate,
-                    SourceLink = article.SourceLink,
-                    Title = article.Title,
-                    Text = article.Text
-                }).ToArray();
+                .Select(article => _articleMapper.ArticleToArticleModel(article)).ToArray();
 
             var isAdmin = false; // Możesz dodać logikę administracyjną jeśli jest wymagana
 
